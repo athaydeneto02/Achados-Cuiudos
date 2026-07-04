@@ -11,12 +11,25 @@ import AdminPanel from './components/AdminPanel';
 import { Flame } from 'lucide-react';
 import { supabase, isSupabaseConfigured } from './supabase';
 
+const getInitialSettings = (): AppSettings => {
+  const saved = localStorage.getItem('achados_settings');
+  if (saved) {
+    try {
+      return JSON.parse(saved);
+    } catch (e) {
+      // ignore
+    }
+  }
+  return DEFAULT_SETTINGS;
+};
+
 export default function App() {
   // Global States
-  const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
+  const [settings, setSettings] = useState<AppSettings>(getInitialSettings);
   const [faqs] = useState(DEFAULT_FAQS);
   const [deals, setDeals] = useState<Deal[]>(DEFAULT_DEALS);
   const [showAdminButton, setShowAdminButton] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // UI Modal States
   const [isAdminOpen, setIsAdminOpen] = useState(false);
@@ -29,6 +42,7 @@ export default function App() {
     }
 
     async function loadData() {
+      setIsLoading(true);
       if (isSupabaseConfigured && supabase) {
         try {
           // Load settings
@@ -85,9 +99,12 @@ export default function App() {
         } catch (err) {
           console.error('Failed to load data from Supabase', err);
           loadSettingsFromLocalStorage();
+        } finally {
+          setIsLoading(false);
         }
       } else {
         loadSettingsFromLocalStorage();
+        setIsLoading(false);
       }
     }
 
@@ -226,7 +243,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050d0a] text-slate-200 flex flex-col font-sans selection:bg-emerald-500 selection:text-white">
+    <div className={`min-h-screen bg-[#050d0a] text-slate-200 flex flex-col font-sans selection:bg-emerald-500 selection:text-white transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
       
       {/* Top Banner: Catchy Scrolling Alert Bar */}
       <div className="w-full bg-[#030705] py-2.5 overflow-hidden border-b border-dark-border">
