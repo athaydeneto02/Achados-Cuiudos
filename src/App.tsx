@@ -250,12 +250,6 @@ export default function App() {
         {/* Informative How it works cards */}
         <HowItWorks />
 
-        {/* Deals list rendered here */}
-        <DealsSection
-          deals={deals}
-          onDealClick={handleDealClick}
-        />
-
         {/* Highlight Banner / Second Call To Action (Catchy & Centralized) */}
         <section className="relative bg-gradient-to-b from-[#050d0a] to-[#030705] py-20 text-white overflow-hidden border-t border-b border-[#0e1a14]">
           {/* Circular lights */}
