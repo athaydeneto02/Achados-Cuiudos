@@ -1,0 +1,6 @@
+{
+  "name": "Achados do Cuiudo",
+  "description": "O seu portal de promoções, cupons de desconto e achados diários! Entre no nosso grupo oficial de WhatsApp e economize de verdade.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
