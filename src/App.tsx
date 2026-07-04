@@ -16,12 +16,18 @@ export default function App() {
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
   const [faqs] = useState(DEFAULT_FAQS);
   const [deals, setDeals] = useState<Deal[]>(DEFAULT_DEALS);
+  const [showAdminButton, setShowAdminButton] = useState(false);
 
   // UI Modal States
   const [isAdminOpen, setIsAdminOpen] = useState(false);
 
   // Load from Supabase (or localStorage on fallback) on mount
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('admin') === 'true') {
+      setShowAdminButton(true);
+    }
+
     async function loadData() {
       if (isSupabaseConfigured && supabase) {
         try {
@@ -236,6 +242,7 @@ export default function App() {
       <Header
         settings={settings}
         onOpenAdmin={() => setIsAdminOpen(true)}
+        showAdminButton={showAdminButton}
       />
 
       {/* Main Content Layout */}

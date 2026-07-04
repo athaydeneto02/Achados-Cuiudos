@@ -6,9 +6,10 @@ import Logo from './Logo';
 interface HeaderProps {
   settings: AppSettings;
   onOpenAdmin: () => void;
+  showAdminButton?: boolean;
 }
 
-export default function Header({ settings, onOpenAdmin }: HeaderProps) {
+export default function Header({ settings, onOpenAdmin, showAdminButton }: HeaderProps) {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-dark-border bg-[#050d0a]/90 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -49,14 +50,16 @@ export default function Header({ settings, onOpenAdmin }: HeaderProps) {
             <span>100% Gratuito</span>
           </div>
 
-          <button
-            onClick={onOpenAdmin}
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-dark-border bg-dark-card text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
-            title="Configurar Link do WhatsApp"
-            id="btn-admin-config"
-          >
-            <Settings className="h-4.5 w-4.5" />
-          </button>
+          {showAdminButton && (
+            <button
+              onClick={onOpenAdmin}
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-dark-border bg-dark-card text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+              title="Configurar Link do WhatsApp"
+              id="btn-admin-config"
+            >
+              <Settings className="h-4.5 w-4.5" />
+            </button>
+          )}
         </div>
       </div>
     </header>
